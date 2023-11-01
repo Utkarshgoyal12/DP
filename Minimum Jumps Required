@@ -1,0 +1,44 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+		Scanner sc=new Scanner (System.in);
+		int t=sc.nextInt();
+		for(int test=0;test<t;test++)
+		{
+			
+			int n=sc.nextInt();
+			int []A=new int[n];
+			for(int i=0;i<A.length;i++)
+			{
+				A[i]=sc.nextInt();
+			}
+			int []memo=new int [A.length];
+			Arrays.fill(memo,Integer.MAX_VALUE);
+			memo[0]=0;
+			System.out.println(minJumps(A,A.length,memo));
+		}
+    }
+	public static int minJumps(int []A,int  n,int []memo)
+    {
+        if(n==1)
+        {
+            return 0;
+        }
+        if(memo[n-1]!=Integer.MAX_VALUE)
+        {
+            return memo[n-1];
+        }
+        for(int i=0;i<=n-2;i++)
+        {
+            if(A[i]+i>=n-1)
+            {
+                int sub_res=minJumps(A,i+1,memo);
+                if(sub_res!=Integer.MAX_VALUE)
+                {
+                    memo[n-1]=Math.min(memo[n-1],sub_res+1);
+                }
+            }
+        }
+        return memo[n-1];
+    }
+}
