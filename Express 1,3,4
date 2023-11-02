@@ -1,0 +1,30 @@
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		long []memo=new long[n+1];
+		Arrays.fill(memo,-1);
+		long ans=Ways(n,memo);
+		System.out.println(ans);
+    }
+	public static long Ways(int num,long []memo)
+	{
+		if(num==0)
+		{
+			return 1;
+		}
+		if(num<0)
+		{
+			return 0;
+		}
+		if(memo[num]!=-1)
+		{
+			return memo[num];
+		}
+		long ones=Ways(num-1,memo);
+		long three=Ways(num-3,memo);
+		long four=Ways(num-4,memo);
+		return memo[num]=ones+three+four;
+	}
+}
