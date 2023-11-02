@@ -1,0 +1,33 @@
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+		Scanner sc=new Scanner(System.in);
+		int t=sc.nextInt();
+		for(int i=0;i<t;i++)
+		{
+			int n=sc.nextInt();
+			int []A=new int[n];
+			for(int j=0;j<n;j++)
+			{
+				A[j]=sc.nextInt();
+			}
+			int []memo=new int[n+1];
+			Arrays.fill(memo,-1);
+			System.out.println(HouseRobber(A,0,memo));
+		}
+    }
+	public static int HouseRobber(int []A,int index,int []memo)
+	{
+		if(index>=A.length)
+		{
+			return 0;
+		}
+		if(memo[index]!=-1)
+		{
+			return memo[index];
+		}
+		int rob=HouseRobber(A,index+2,memo)+A[index];
+		int dontRob=HouseRobber(A,index+1,memo);
+		return memo[index]=Math.max(rob,dontRob);
+	}
+}
