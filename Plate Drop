@@ -1,0 +1,62 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc=new Scanner(System.in);
+		int t=sc.nextInt();
+		for(int i=0;i<t;i++)
+		{
+			int k=sc.nextInt();
+			int n=sc.nextInt();
+			System.out.println(superEggDrop(k,n));
+		}
+    }
+	public static int superEggDrop(int k, int n) {
+        int [][]memo=new int[n+1][k+1];
+        for(int i=0;i<memo.length;i++)
+        {
+            Arrays.fill(memo[i],-1);
+        }
+        int res=find(k,n,memo);
+        return res;
+    }
+    public static int find(int eggs,int floors,int [][]memo)
+    {
+        if(eggs==1)
+        {
+            return floors;
+        }
+        if(floors==1)
+        {
+            return 1;
+        }
+        if(memo[floors][eggs]!=-1)
+        {
+            return memo[floors][eggs];
+        }
+        if(floors==0)
+        {
+            return 0;
+        }
+        int mn=Integer.MAX_VALUE;
+        int low=0;
+        int high=floors;
+        while(low<=high)
+        {
+            int mid=low+(high-low)/2; 
+            int left=find(eggs-1,mid-1,memo);
+            int right=find(eggs,floors-mid,memo);
+            int temp=Math.max(left,right)+1;
+        //since we need more temp value in worst case, so need to go above.
+            if(left<right)
+            {
+                low=mid+1;
+            }
+            else
+            {
+                high=mid-1;
+            }
+            mn=Math.min(temp,mn);
+        }
+        return memo[floors][eggs]=mn;
+    }
+}
