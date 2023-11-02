@@ -1,0 +1,64 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+		Scanner sc=new Scanner(System.in);
+		int t=sc.nextInt();
+		for(int test=0;test<t;test++)
+		{
+			String s=sc.next();
+			System.out.println(minCut(s));
+		}
+	}
+	public static int minCut(String s) {
+        if(s.length()==0)
+        {
+            return 0;
+        }
+        char []ch=s.toCharArray();
+        int [][]dp=new int[s.length()][s.length()];
+        boolean [][]pal=new boolean [s.length()][s.length()];
+        for(int i=0;i<dp.length;i++)
+        {
+            dp[i][i]=0;
+            pal[i][i]=true;
+        }
+        for(int gap=1;gap<s.length();gap++)
+        {
+            for(int i=0;i+gap<s.length();i++)
+            {
+                int j=i+gap;
+                if(ch[i]==ch[j] && (pal[i+1][j-1] || gap==1))
+                {
+                    dp[i][j]=0;
+                    pal[i][j]=true;
+                }
+                else
+                {
+                    pal[i][j]=false;
+                    dp[i][j]=Integer.MAX_VALUE;
+                    for(int k=i;k<j;k++)
+                    {
+                        dp[i][j]=Math.min(dp[i][j],1+dp[i][k]+dp[k+1][j]);
+                    }
+                }
+            }
+        }
+        return dp[0][s.length()-1];
+
+    }
+    public static boolean isPalindrome(char []ch,int start,int end)
+    {
+        int i=start;
+        int j=end;
+        while(i<j)
+        {
+            if(ch[i]!=ch[j])
+            {
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+}
