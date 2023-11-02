@@ -1,0 +1,41 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+		Scanner sc=new Scanner(System.in);
+		int t=sc.nextInt();
+		for(int test=0;test<t;test++)
+		{
+			int n=sc.nextInt();
+			System.out.println(nthUgly(n));
+		}
+    }
+	public static long nthUgly(int n)
+    {
+		long []A=new long[n];
+		A[0]=1;
+        int p2=0;
+        int p3=0;
+        int p5=0;
+        for(int i=1;i<A.length;i++)
+        {
+            long val1 = (long)(A[p2] *  2);
+			long val2 = (long)(A[p3] *  3);
+			long val3 = (long)(A[p5] *  5);
+            long min=Math.min(val1,Math.min(val2,val3));
+            A[i]=min;
+            if(min==val1)
+            {
+                p2++;
+            }
+            if(min==val2)
+            {
+                p3++;
+            }
+            if(min==val3)
+            {
+                p5++;
+            }
+        }
+        return A[A.length-1];
+    }
+}
