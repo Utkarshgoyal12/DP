@@ -1,0 +1,35 @@
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int []A=new int[n];
+		for(int i=0;i<A.length;i++)
+		{
+			A[i]=sc.nextInt();
+		}
+		System.out.print(LIS(A));
+    }
+	public static int LIS(int []A)
+	{
+		int []lis=new int[A.length];
+		lis[0]=1;
+		for(int i=1;i<A.length;i++)
+		{
+			lis[i]=1;
+			for(int j=i-1;j>=0;j--)
+			{
+				if(A[j]<A[i])
+				{
+					lis[i]=Math.max(lis[i],lis[j]+1);
+				}
+			}
+		}
+		int ans=lis[0];
+		for(int i=1;i<lis.length;i++)
+		{
+			ans=Math.max(lis[i],ans);
+		}
+		return ans;
+	}
+}
