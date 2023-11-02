@@ -1,0 +1,39 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc=new Scanner (System.in);
+		int n=sc.nextInt();//money
+		int m=sc.nextInt();
+		int []coins=new int [m];
+		for(int i=0;i<m;i++)
+		{
+			coins[i]=sc.nextInt();
+		}
+		int [][]memo=new int[m+1][n+1];
+		for(int i=0;i<memo.length;i++)Arrays.fill(memo[i],-1);
+		System.out.print(ways(coins,coins.length,n,memo));
+    }
+	public static int ways(int []coins,int index,int money,int [][]memo)
+	{
+		if(index<=0)
+		{
+			return 0;
+		}
+		if(money==0)
+		{
+			return 1;
+		}
+		if(memo[index][money]!=-1)
+		{
+			return memo[index][money];
+		}
+		int pick=0;
+		int dontp=0;
+		if(coins[index-1]<=money)
+		{
+			pick=ways(coins,index,money-coins[index-1],memo);
+		}
+		dontp=ways(coins,index-1,money,memo);
+		return memo[index][money]=pick+dontp;
+	}
+}
