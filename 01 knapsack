@@ -1,0 +1,44 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+    	Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int capacity = sc.nextInt();
+        int[] sizes = new int[n];
+        int[] values = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            sizes[i] = sc.nextInt();
+        }
+
+        for (int i = 0; i < n; i++) {
+            values[i] = sc.nextInt();
+        }
+        int maxTotalValue = knapsack(sizes, values, n, capacity);
+        System.out.println(maxTotalValue);
+    }
+	public static int knapsack(int[] sizes, int[] values, int n, int capacity) 
+	{
+        int[][] dp = new int[n + 1][capacity + 1];
+        for (int i = 0; i <= n; i++) 
+		{
+            for (int j = 0; j <= capacity; j++) 
+			{
+                if (i == 0 || j == 0) 
+				{
+                    dp[i][j] = 0;
+                } 
+				else if (sizes[i - 1] <= j) 
+				{
+                    dp[i][j] = Math.max(values[i - 1] + dp[i - 1][j - sizes[i - 1]], dp[i - 1][j]);
+                } 
+				else 
+				{
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+
+        return dp[n][capacity];
+    }
+}
