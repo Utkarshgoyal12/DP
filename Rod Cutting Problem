@@ -1,0 +1,42 @@
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int []price=new int[n];
+        for(int i=0;i<n;i++)
+        {
+            price[i]=sc.nextInt();
+        }
+        int length=sc.nextInt();
+        int border=Math.min(length,price.length);
+        int [][]memo=new int[length+1][border+1];
+        for(int i=0;i<memo.length;i++)Arrays.fill(memo[i],-1);
+        int res=count(price,length,border,border,memo);
+        System.out.println(res);
+    }
+    public static int count(int []price,int length,int index,int border,int [][]memo)
+    {
+        
+        if(index<=0)
+        {
+            return Integer.MIN_VALUE;
+        }
+        if(length==0)
+        {
+            return 0;
+        }
+        if(memo[length][index]!=-1)
+        {
+            return memo[length][index];
+        }
+        int cut=0;
+        int dcut=0;
+        if(length>=index)
+        {
+            cut=count(price,length-index,index,border,memo)+price[index-1];
+        }
+        dcut=count(price,length,index-1,border,memo);
+        return memo[length][index]=Math.max(cut,dcut);
+    }
+}
