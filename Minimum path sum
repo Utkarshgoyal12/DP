@@ -1,0 +1,41 @@
+import java.util.*;
+public class Main {
+    public static void main (String args[]) {
+        Scanner sc=new Scanner(System.in);
+        int m=sc.nextInt();
+        int n=sc.nextInt();
+        int [][]A=new int[m][n];
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                A[i][j]=sc.nextInt();
+            }
+        }
+        int [][]memo=new int[A.length+1][A[0].length+1];
+        for(int i=0;i<A.length;i++)
+        {
+            Arrays.fill(memo[i],Integer.MAX_VALUE);
+        }
+        System.out.println(minSum(A,0,0,memo));
+    }
+    public static int minSum(int [][]A,int cr,int cc,int [][]memo)
+    {
+        if(cr>=A.length || cc>=A[0].length)
+        {
+            return Integer.MAX_VALUE;
+
+        }
+        if(memo[cr][cc]!=Integer.MAX_VALUE)
+        {
+            return memo[cr][cc];
+        }
+        if(cr==A.length-1 && cc==A[0].length-1)
+        {
+            return A[cr][cc];
+        }
+        int right=minSum(A,cr,cc+1,memo);
+        int bottom=minSum(A,cr+1,cc,memo);
+        return memo[cr][cc]=Math.min(right,bottom)+A[cr][cc];
+    }
+}
