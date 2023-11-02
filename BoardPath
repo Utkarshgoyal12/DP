@@ -1,0 +1,29 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+        Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int m=sc.nextInt();
+		int res=Ways(n,m,"");
+		System.out.println();
+		System.out.print(res);
+    }
+	public static int Ways(int size,int face,String ans)
+	{
+		if(size==0)
+		{
+			System.out.print(ans+" ");
+			return 1;
+		}
+		if(size<0)
+		{
+			return 0;
+		}
+		int count=0;
+		for(int i=1;i<=face;i++)
+		{
+			count+=Ways(size-i,face,ans+i);
+		}
+		return count;
+	}
+}
