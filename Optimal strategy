@@ -1,0 +1,35 @@
+import java.util.*;
+public class Main {
+    public static void main(String args[]) {
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int []A=new int[n];
+		for(int i=0;i<n;i++)
+		{
+			A[i]=sc.nextInt();
+		}
+		int [][]memo=new int[A.length][A.length];
+		for(int i=0;i<memo.length;i++)
+		{
+			Arrays.fill(memo[i],-1);
+		}
+		int val=find(A,0,A.length-1,memo);
+		System.out.println(val);
+    }
+	public static int find(int []nums,int i,int j,int [][]memo)
+    {
+        if(i==j)
+        {
+            return nums[i];
+        }
+        if(i+1==j)
+        {
+            return Math.max(nums[i],nums[j]);
+        }
+		if(memo[i][j]!=-1)
+		{
+			return memo[i][j];
+		}
+        return memo[i][j]=Math.max(nums[i]+Math.min(find(nums,i+2,j,memo),find(nums,i+1,j-1,memo)),nums[j]+Math.min(find(nums,i+1,j-1,memo),find(nums,i,j-2,memo)));
+    }
+}
